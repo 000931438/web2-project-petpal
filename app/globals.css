@@ -1,15 +1,9 @@
 @import "tailwindcss";
 
+/* Light & Dark Theme Variables */
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,8 +13,58 @@
   }
 }
 
+/* Tailwind Theme Bindings */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Global Body Styling */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+
+  /* CPRG-306 assignment style */
+  @apply min-h-screen bg-neutral-900 text-neutral-100;
+}
+
+/* Reusable UI Classes (Matches CPRG‑306 Assignment Style) */
+
+.page-container {
+  @apply max-w-2xl mx-auto p-4 space-y-8;
+}
+
+.heading {
+  @apply text-3xl font-bold text-blue-400;
+}
+
+.card {
+  @apply bg-neutral-800 p-6 rounded-xl shadow-lg border border-neutral-700;
+}
+
+.input {
+  @apply w-full p-3 rounded-lg bg-neutral-700 border border-neutral-600 
+         text-neutral-100 focus:ring-2 focus:ring-blue-500 outline-none;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold 
+         hover:bg-blue-700 transition;
+}
+
+.btn-danger {
+  @apply bg-red-600 text-white px-4 py-2 rounded-lg font-semibold 
+         hover:bg-red-700 transition;
+}
+
+.btn-success {
+  @apply bg-green-600 text-white px-4 py-2 rounded-lg font-semibold 
+         hover:bg-green-700 transition;
+}
+
+.btn {
+  @apply px-4 py-2 rounded-lg font-semibold transition;
 }
