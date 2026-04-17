@@ -7,8 +7,8 @@ export default function RemindersPage() {
   const [task, setTask] = useState("");
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
-  const [reminders, setReminders] = useState([]);
-  const [editingId, setEditingId] = useState(null);
+  const [reminders, setReminders] = useState<any[]>([]);
+  const [editingId, setEditingId] = useState<any>(null);
 
   // Load reminders
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function RemindersPage() {
   }, []);
 
   // Save reminders
-  function save(updated) {
+  function save(updated: any[]) {
     setReminders(updated);
     localStorage.setItem("pet-reminders", JSON.stringify(updated));
   }
@@ -28,7 +28,7 @@ export default function RemindersPage() {
 
     if (editingId) {
       // EDIT MODE
-      const updated = reminders.map((r) =>
+      const updated = reminders.map((r: any) =>
         r.id === editingId ? { ...r, task, time, date } : r
       );
       save(updated);
@@ -51,21 +51,21 @@ export default function RemindersPage() {
   }
 
   // Toggle Done
-  function toggleDone(id) {
+  function toggleDone(id: any) {
     save(
-      reminders.map((r) =>
+      reminders.map((r: any) =>
         r.id === id ? { ...r, done: !r.done } : r
       )
     );
   }
 
   // Delete
-  function remove(id) {
-    save(reminders.filter((r) => r.id !== id));
+  function remove(id: any) {
+    save(reminders.filter((r: any) => r.id !== id));
   }
 
   // Edit
-  function editReminder(r) {
+  function editReminder(r: any) {
     setTask(r.task);
     setTime(r.time);
     setDate(r.date);
@@ -108,7 +108,7 @@ export default function RemindersPage() {
 
         {/* REMINDERS LIST */}
         <div className="space-y-4 mt-6">
-          {reminders.map((r) => (
+          {reminders.map((r: any) => (
             <div
               key={r.id}
               className="bg-neutral-900 border border-neutral-800 p-5 rounded-xl shadow-xl flex justify-between items-center"

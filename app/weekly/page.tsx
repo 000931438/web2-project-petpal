@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/24/outline";
 
 export default function WeeklyPage() {
-  const [reminders, setReminders] = useState([]);
+  const [reminders, setReminders] = useState<any[]>([]);
 
   useEffect(() => {
     const saved = localStorage.getItem("pet-reminders");
@@ -18,7 +18,7 @@ export default function WeeklyPage() {
     return d;
   });
 
-  function formatDate(date) {
+  function formatDate(date: any) {
     return date.toLocaleDateString("en-CA"); // yyyy-mm-dd
   }
 
@@ -29,13 +29,13 @@ export default function WeeklyPage() {
         <h2 className="text-3xl font-bold text-blue-400 mb-6">Weekly Overview</h2>
 
         <div className="space-y-6">
-          {days.map((day) => {
+          {days.map((day: any) => {
             const dateStr = formatDate(day);
 
             // Filter reminders for this day
             const dayReminders = reminders
-              .filter((r) => r.date === dateStr)
-              .sort((a, b) => (a.time > b.time ? 1 : -1)); // sort by time
+              .filter((r: any) => r.date === dateStr)
+              .sort((a: any, b: any) => (a.time > b.time ? 1 : -1));
 
             return (
               <div
@@ -59,7 +59,7 @@ export default function WeeklyPage() {
                   <p className="text-neutral-400">No tasks.</p>
                 ) : (
                   <div className="space-y-2">
-                    {dayReminders.map((r) => (
+                    {dayReminders.map((r: any) => (
                       <div
                         key={r.id}
                         className="flex items-center gap-2 text-neutral-300 hover:text-white transition"

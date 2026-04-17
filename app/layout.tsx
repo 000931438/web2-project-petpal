@@ -1,12 +1,13 @@
 import "./globals.css";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 export const metadata = {
   title: "PetPal",
   description: "Pet Care Reminder App",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className="bg-neutral-900 text-neutral-100">

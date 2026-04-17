@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 
 export default function PetProfilePage() {
-  const [pet, setPet] = useState(null); // single pet only
+  const [pet, setPet] = useState<any>(null); // single pet only
   const [form, setForm] = useState({ name: "", type: "", age: "" });
   const [isEditing, setIsEditing] = useState(false);
 
@@ -15,7 +15,7 @@ export default function PetProfilePage() {
   }, []);
 
   // Save pet to localStorage
-  function savePet(updated) {
+  function savePet(updated: any) {
     setPet(updated);
     localStorage.setItem("pet-profile", JSON.stringify(updated));
   }
@@ -52,7 +52,7 @@ export default function PetProfilePage() {
   }
 
   // Color badge for type
-  function typeColor(type) {
+  function typeColor(type: any) {
     const t = type.toLowerCase();
     if (t === "dog") return "bg-blue-600/30 text-blue-300";
     if (t === "cat") return "bg-purple-600/30 text-purple-300";

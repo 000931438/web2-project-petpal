@@ -6,8 +6,8 @@ import { CheckCircleIcon } from "@heroicons/react/24/solid";
 export default function HomePage() {
   const [fact, setFact] = useState("");
   const [loadingFact, setLoadingFact] = useState(true);
-  const [tasks, setTasks] = useState([]);
-  const [allReminders, setAllReminders] = useState([]);
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [allReminders, setAllReminders] = useState<any[]>([]);
 
   // NEW STATES
   const [audioAllowed, setAudioAllowed] = useState(false);
@@ -22,7 +22,7 @@ export default function HomePage() {
       setAllReminders(parsed);
 
       const today = new Date().toLocaleDateString("en-CA");
-      setTasks(parsed.filter((r) => r.date === today));
+      setTasks(parsed.filter((r: any) => r.date === today));
     }
 
     async function loadFact() {
@@ -40,7 +40,7 @@ export default function HomePage() {
   }, []);
 
   // Helper: Check if reminder is overdue
-  function isOverdue(r) {
+  function isOverdue(r: any) {
     const now = new Date();
     const reminderTime = new Date(`${r.date}T${r.time || "00:00"}`);
     return !r.done && reminderTime < now;
@@ -56,13 +56,15 @@ export default function HomePage() {
       const currentDate = now.toLocaleDateString("en-CA");
       const currentTime = now.toTimeString().slice(0, 5);
 
-      allReminders.forEach((r) => {
+      allReminders.forEach((r: any) => {
         if (r.done) return;
 
         if (r.date === currentDate && r.time === currentTime) {
           // Play sound
           const audio = new Audio("/notification.mp3");
-          audio.play().catch(() => console.log("Audio blocked until user interacts."));
+          audio.play().catch(() =>
+            console.log("Audio blocked until user interacts.")
+          );
 
           // Show toast
           setToast(`Reminder: ${r.task}`);
@@ -73,14 +75,14 @@ export default function HomePage() {
           setTimeout(() => setBlink(false), 60000);
         }
       });
-    }, 5000); // check every 5 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [allReminders, audioAllowed]);
 
   // Toggle done
-  function toggleDone(id) {
-    const updated = allReminders.map((r) =>
+  function toggleDone(id: any) {
+    const updated = allReminders.map((r: any) =>
       r.id === id ? { ...r, done: !r.done } : r
     );
 
@@ -88,19 +90,18 @@ export default function HomePage() {
     setAllReminders(updated);
 
     const today = new Date().toLocaleDateString("en-CA");
-    setTasks(updated.filter((r) => r.date === today));
+    setTasks(updated.filter((r: any) => r.date === today));
   }
 
-  const completed = tasks.filter((t) => t.done).length;
+  const completed = tasks.filter((t: any) => t.done).length;
   const pending = tasks.length - completed;
   const progress = tasks.length === 0 ? 0 : (completed / tasks.length) * 100;
 
   return (
     <div
       className="min-h-screen bg-neutral-950 p-8"
-      onClick={() => setAudioAllowed(true)} // unlock audio
+      onClick={() => setAudioAllowed(true)}
     >
-
       {/* HEADER */}
       <div className="flex items-center gap-4 mb-10">
         <img
@@ -121,10 +122,11 @@ export default function HomePage() {
 
       {/* GRID LAYOUT */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
         {/* SUMMARY CARD */}
         <div className="lg:col-span-1 card bg-neutral-900 border border-neutral-800 shadow-xl p-6">
-          <h2 className="text-xl font-semibold text-blue-300 mb-4">Today's Summary</h2>
+          <h2 className="text-xl font-semibold text-blue-300 mb-4">
+            Today's Summary
+          </h2>
 
           <div className="flex justify-between text-neutral-300 mb-3">
             <p>Completed: {completed}</p>
@@ -141,13 +143,15 @@ export default function HomePage() {
 
         {/* TASKS CARD */}
         <div className="lg:col-span-2 card bg-neutral-900 border border-neutral-800 shadow-xl p-6">
-          <h2 className="text-2xl font-bold text-blue-400 mb-6">Today's Tasks</h2>
+          <h2 className="text-2xl font-bold text-blue-400 mb-6">
+            Today's Tasks
+          </h2>
 
           {tasks.length === 0 ? (
             <p className="text-neutral-300 text-lg">No tasks for today.</p>
           ) : (
             <div className="space-y-4">
-              {tasks.map((t) => (
+              {tasks.map((t: any) => (
                 <div
                   key={t.id}
                   className="flex justify-between items-center bg-neutral-800 p-4 rounded-xl border border-neutral-700 hover:scale-[1.01] transition-all duration-300"
@@ -160,13 +164,14 @@ export default function HomePage() {
                     <div>
                       <p
                         className={`text-lg font-semibold ${
-                          t.done ? "line-through text-neutral-500" : "text-blue-300"
+                          t.done
+                            ? "line-through text-neutral-500"
+                            : "text-blue-300"
                         }`}
                       >
                         {t.task}
                       </p>
 
-                      {/* TIME + OVERDUE LABEL */}
                       <p className="text-neutral-400 text-sm mt-1">
                         Time: {t.time || "No time set"}
                         {isOverdue(t) && (
@@ -193,7 +198,9 @@ export default function HomePage() {
 
       {/* PET FACT */}
       <div className="card shadow-xl border border-neutral-800 bg-neutral-900 p-6 mt-12">
-        <h2 className="text-2xl font-bold text-yellow-400 mb-4">Fun Pet Fact</h2>
+        <h2 className="text-2xl font-bold text-yellow-400 mb-4">
+          Fun Pet Fact
+        </h2>
 
         {loadingFact ? (
           <div className="animate-pulse space-y-3">
